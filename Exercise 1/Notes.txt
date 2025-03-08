@@ -1,0 +1,139 @@
+Coursework is the same as lab sesion 4, but we implement php and nginx.
+You need to start the containers, but the streaming [thing] we will work on it later.
+
+You can use the VMs you created, but you need to create the containers for the coursework.
+
+
+Is there any clear list of what the options are?
+From my understanding they are:
+1. Load balanced nginx VM's like in lab 4 or
+2. Docker-compose services
+From Joseph Kilbane to Everyone:  04:43 PM
+So it can all be done in one docker compose yaml or several dockerfiles to achieve the same outcome?
+
+From Me to Everyone:  04:56 PM
+Would we be using automation to create all of the containers, or would we be following the approach in the lab where we manually created the first container, and the rest were automated?
+From Ali Alissa to Me:  (Privately) 05:34 PM
+hi Anthony, you need to use one vm that host the other containers
+From Me to Ali Alissa:  (Privately) 05:37 PM
+Thanks
+
+
+-- Docker sources (4. docker nginx specific) --
+1. https://codeburst.io/scaling-out-with-docker-and-nginx-8eda9fb1654c
+2. https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php
+3. https://searchitoperations.techtarget.com/tutorial/Control-Docker-containers-with-the-Nginx-load-balancer
+4. https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+5. https://docs.docker.com/compose/gettingstarted/
+
+-- Important sources: Docker Compose --
+1. https://medium.com/@vinodkrane/microservices-scaling-and-load-balancing-using-docker-compose-78bf8dc04da9
+2. https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
+
+-- Load balancing --
+1. https://superuser.openstack.org/articles/run-load-balanced-service-docker-containers-openstack/
+
+
+/// IMPORTANT ///
+-- Multi docker compose --
+1. https://www.digitalocean.com/community/tutorials/workflow-multiple-containers-docker-compose
+
+-- Docker compose load balancing --
+1. https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
+2! https://medium.com/@vinodkrane/microservices-scaling-and-load-balancing-using-docker-compose-78bf8dc04da9
+
+3. https://towardsdatascience.com/sample-load-balancing-solution-with-docker-and-nginx-cf1ffc60e644
+4! https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php
+5. https://docs.docker.com/get-started/02_our_app/
+
+6! https://takacsmark.com/dockerfile-tutorial-by-example-dockerfile-best-practices-2018/
+
+
+Firstly, a Dockerfile is needed to create the Nginx image – then Docker Compose to create the containers.
+The code is saved to X for automation.
+
+1. Shell script to automate Dockerfile
+2. Automate container creation with Docker Compose.
+
+Dockerfile makes the image (page 3 figure 4) and docker compose takes that image and makes a new container.
+I think they can be in the same directory.
+Docker “build” creates a new image 	Docker “run” creates a new container (page 2)
+
+//////////////////
+/// Dockerfile ///
+//////////////////
+- Make new directory
+- Go into the directory
+- Make dockerfile (not sure why) (has FROM... & COPY...)
+- call "$sudo docker build -t <image name> ."
+- (OPTIONAL - making container) call "$sudo docker run -it -d --name <container name> -p 8080:80 <image name>"
+
+^ Can all be done with a shell script
+^ "$sudo docker image ls" can be used to view all created images
+
+//////////////////////
+/// Docker Compose ///
+//////////////////////
+- call "$nano docker-compose.yml" (creates docker compose file)
+	- Paste docker compose content into this file
+- Make directory "websites"
+- Go into the directory
+- Create index.html page ("Hello world from Docker Compose")
+- Call "$sudo docker-compose up -d" (creates new docker container with the image specified in the docker-compose.yml file and looks at website html pages in websites folder)
+	- A new container should have been created ("$sudo docker ps" or "$sudo docker ps -a")
+
+////////////////
+/// Comments ///
+////////////////
+Perhaps the Dockerfile will be used to create the work directory where the website pages are stored (https://docs.docker.com/get-started/02_our_app/)
+The Dockerfile takes the index.html and the new containers use it
+
+/////////////////
+/// Questions ///
+/////////////////
+- Why do we need to create a dockerfile? It seems like it doesn't do anything with docker compose
+- What is the purpose of the original index.html file that is created alongside the dockerfile?
+- Are the 3 servers (containers) hosted per 3 VMs (1 server/container per VM)?
+- When creating a new container, where is it reading the html files?
+- When creating a new image, it reads the index.html file. But where does the image/container read from the html files. Changing
+
+
+/////////////////////////
+/// Meeting with Jaime //
+/////////////////////////
+One VM with numerous containers. Load balancing with the different containers (not different VMs).
+
+
+///////////////////
+/// Friday work ///
+///////////////////
+- Medium link: try the nginx.conf volumes. Service "nginx" specified nginx config in "volumes".
+- Lab 4: try using nginx for load balancing but manually specifying the containers with different ports, and specify them in the nginx config.
+
+
+//////////////////////
+/// Wednesday work ///
+//////////////////////
+- Change Dockerfile to create new image, which docker-compose uses
+- Change "webserver" service and all affiliated to "server" or "site", etc.
+- Change index.html to remove images sources
+
+- Potentially have an automation shell script for doing everything (or show example at the end).
+- Get a better understanding of Dockerfile and what it needs to contain (WTF does it do).
+
+- We have a better Dockerfile - but do we need to run a comand " $docker build... " or just use " $sudo docker-compose up --build " 
+
+
+/// NOTES ///
+- Changed docker-compose.yml and nginx.conf webserver service to "ecommercesite"
+- Changed Dockerfile COPY... (from https://www.bogotobogo.com/DevOps/Docker/Docker-Compose-Nginx-Reverse-Proxy-Multiple-Containers.php)
+- use " $sudo docker-compose up --build " to view it running (from https://www.digitalocean.com/community/tutorials/workflow-multiple-containers-docker-compose)
+
+/// Things to work on ///
+- Check whether Dockerfile is good
+- Find a way to test for load balancing - possibly needs scale containers upon initiation 
+
+
+
+
+

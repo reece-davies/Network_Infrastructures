@@ -1,0 +1,35 @@
+
+version: "2"
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=abcd1234
+    restart: always
+    volumes:
+      - db_vol:/var/lib/mysql
+
+  ecommercesite:
+    image: nginx:latest
+    restart: always
+
+    volumes:
+      - ./website:/usr/share/nginx/html/
+
+    depends_on:
+      - db
+    links:
+      - db
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - ecommercesite
+    ports:
+      - "4000:4000"
+
+volumes:
+  db_vol:

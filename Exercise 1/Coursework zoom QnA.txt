@@ -1,0 +1,11 @@
+Lab 4 is load balancing over VMs, but coursework is conainer based. Load balancer is a container. Workers are all containers. 1 service 1 container approach.
+
+All the things that are done in the dockerfile can be done in the docker compose file but in the coursework brief it says to mention your written dockerfile…. if we can do everything we need in the docker compose file can we just not have a dockerfile at all and just have a docker compose file
+
+I'm a little uncertain how you manage the two network interfaces you mentioned. I understand you want an outside facing interface, and an internal interface to prevent the backend servers being contacted directly but I have no clue how this might be implemented. Was this covered in a lab and I've forgotten?
+
+The load balancer is the only one to the outside world, everything else is internal.
+
+Other questions you can leave for interpretation.
+
+Just need to demonstrate load balancing.
