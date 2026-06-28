@@ -1,0 +1,12 @@
+Sudo Ifconfig eth0 0
+Sudo dhclient eth0
+(Removes current ip address)
+
+Set ip:
+ifconfig eth0 192.168.1.5 netmask 255.255.255.0 up
+
+sudo ifconfig eth0 192.168.0.1 netmask 255.255.255.0
+
+
+--- My Config ---
+sudo ifconfig ens33 192.168.10.206 netmask 255.255.255.0

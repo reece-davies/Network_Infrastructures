@@ -1,0 +1,12 @@
+Use Ubuntu 18 and reinstall mininet
+The ODL vm doesn't have any problems
+
+There are commands in Lecture 9 slides for apache commands whilst using XTerm.
+
+When Cody was adjusting the bandwifth, when he did on 16, it wouldn't let you.
+
+XTerm backspace problem (wouldn't let you): when connecting, go to terminal settings and turn off backspace H.
+
+Lab 9 allows you to enable intranet, so Cody says "I don't see why we would need that".
+
+Xterm little white windows: you can't download things on them. You can use the controller c0 (Cody thinks), or you can download directly through the VM.
